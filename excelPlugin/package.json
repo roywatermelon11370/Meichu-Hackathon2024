@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "core-js": "^3.36.0",
-    "regenerator-runtime": "^0.14.1"
+    "express": "^4.21.1",
+    "regenerator-runtime": "^0.14.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
