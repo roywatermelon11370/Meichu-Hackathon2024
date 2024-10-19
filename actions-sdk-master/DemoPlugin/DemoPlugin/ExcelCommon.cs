@@ -3,6 +3,8 @@ namespace Loupedeck.DemoPlugin
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Runtime.InteropServices;
+    using System.Threading;
 
     using Loupedeck;
     using Loupedeck.DemoPlugin;
@@ -24,6 +26,25 @@ namespace Loupedeck.DemoPlugin
             this.Action = msg;
         }
 
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+
+        private const byte VK_CONTROL = 0x11;
+        private const byte VK_C = 0x43;
+        private const uint KEYEVENTF_KEYUP = 0x0002;
+
+        public static void SimulateCtrlC()
+        {
+            // 按下 Ctrl
+            keybd_event(VK_CONTROL, 0, 0, UIntPtr.Zero);
+            // 按下 C
+            keybd_event(VK_C, 0, 0, UIntPtr.Zero);
+            // 松开 C
+            keybd_event(VK_C, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+            // 松开 Ctrl
+            keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+        }
+
         // public void UpdateAction(string newAction) {
         //     PluginLog.Info($"Excel action updated to {Action}");
         //     GetButtonPressActionNames();
@@ -33,6 +54,8 @@ namespace Loupedeck.DemoPlugin
 
         public Int32 counter = 0;
         public String[] buttons;
+
+        private int i = 0;
 
         // Define the buttons for the touch page
         public override IEnumerable<String> GetButtonPressActionNames()
@@ -46,6 +69,12 @@ namespace Loupedeck.DemoPlugin
                 ,"send"     ,""     ,"change"
                 ,"cut"  ,"copy" ,"paste"};
                 break;
+                // case "select":
+                //     this.buttons = new String[]
+                //         {"rot"     ,"close"
+                // ,"send"     ,""     ,"change"
+                // ,"cut"  ,"copy" ,"paste"};
+                // break;
                 default:
                 this.buttons = new String[]
                         {"rot"     ,"close"
@@ -91,6 +120,7 @@ namespace Loupedeck.DemoPlugin
                     break;
                 case "copy":
                     PluginLog.Info("copy");
+                    SimulateCtrlC();
                     break;
                 case "paste":
                     PluginLog.Info("paste");
@@ -99,7 +129,8 @@ namespace Loupedeck.DemoPlugin
                     this.Action = "-1";
                     break;
                 case "send":
-                    this.DemoPlugin.GetServer().SendMessage("Hello");
+                    this.DemoPlugin.GetServer().SendMessage(i.ToString());
+                    i++;
                     break;
                 case "rot":
                     //PluginLog.Info();
