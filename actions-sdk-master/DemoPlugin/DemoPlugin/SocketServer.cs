@@ -61,7 +61,7 @@ namespace Loupedeck.DemoPlugin
                     WebSocket webSocket = webSocketContext.WebSocket;
                     PluginLog.Info($"Server started");
                     // await this.HandleWebSocketConnection(webSocket);
-                    await Task.WhenAll(HandleMessages(webSocket), HandleWebSocketConnection(webSocket));
+                    await Task.WhenAll(this.HandleMessages(webSocket), this.HandleWebSocketConnection(webSocket));
                 }
             }
         }
@@ -74,6 +74,7 @@ namespace Loupedeck.DemoPlugin
                     do {
                         var messageBuffer = WebSocket.CreateClientBuffer(1024, 16);
                         result = await webSocket.ReceiveAsync(messageBuffer, CancellationToken.None);
+                        PluginLog.Info("Fuck");
                         ms.Write(messageBuffer.Array, messageBuffer.Offset, result.Count);
                     }
                     while (!result.EndOfMessage);
@@ -89,7 +90,7 @@ namespace Loupedeck.DemoPlugin
         } catch (InvalidOperationException) {
             PluginLog.Info("[WS] Tried to receive message while already reading one.");
         }
-    }
+        }
 
         protected async Task HandleWebSocketConnection(WebSocket webSocket)
         {
@@ -109,7 +110,7 @@ namespace Loupedeck.DemoPlugin
 
             //await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         }
-
+    }
         // protected async Task HandleWebSocketConnection(WebSocket webSocket)
         // {
         //     // using (var ms = new MemoryStream()) {
