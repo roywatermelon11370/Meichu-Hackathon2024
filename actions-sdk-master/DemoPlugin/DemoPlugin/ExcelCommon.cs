@@ -1,4 +1,4 @@
-namespace Loupedeck.MyProjectPlugin
+namespace Loupedeck.DemoPlugin
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,8 @@ namespace Loupedeck.MyProjectPlugin
 
     public class ExcelCommon : PluginDynamicFolder
     {
+
+        private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
         public ExcelCommon()
         {
             this.DisplayName = "dyna";
@@ -16,7 +18,19 @@ namespace Loupedeck.MyProjectPlugin
         }
         protected PluginDynamicFolderNavigation GetNavigationArea() => PluginDynamicFolderNavigation.None; // 設置為 ButtonArea，這將在觸控頁面的左上角自動添加返回按鈕
 
-        public Int32 action = 1;
+        public string Action = "select";
+
+        public async void setAction(string msg) {
+            this.Action = msg;
+        }
+
+        // public void UpdateAction(string newAction) {
+        //     PluginLog.Info($"Excel action updated to {Action}");
+        //     GetButtonPressActionNames();
+        // }
+        
+        public event System.EventHandler ActionChanged;
+
         public Int32 counter = 0;
         public String[] buttons;
 
@@ -24,20 +38,33 @@ namespace Loupedeck.MyProjectPlugin
         public override IEnumerable<String> GetButtonPressActionNames()
         {
             IEnumerable<String> tmp;
-            if (this.action == 1)//常用
-            {
-                this.buttons = new String[]
+            // this.action = this.DemoPlugin.GetMessage();
+            switch(this.Action) {
+                case "select":
+                    this.buttons = new String[]
                         {"rot"     ,"close"
-                ,""     ,""     ,"change"
+                ,"send"     ,""     ,"change"
                 ,"cut"  ,"copy" ,"paste"};
-            }
-            else
-            {
+                break;
+                default:
                 this.buttons = new String[]
                         {"rot"     ,"close"
-                ,""     ,""     ,"change"
-                ,"1"    ,"2"    ,"3"};
+                ,"send"     ,""     ,"change"
+                ,"1"  ,"2" ,"3"};
+                break;
+
             }
+            // if (this.action == "1")//常用
+            // {
+                
+            // }
+            // else
+            // {
+            //     this.buttons = new String[]
+            //             {"rot"     ,"close"
+            //     ,"send"     ,""     ,"change"
+            //     ,"1"    ,"2"    ,"3"};
+            // }
             return new[]
                 {
                     PluginDynamicFolder.NavigateUpActionName,
@@ -69,7 +96,10 @@ namespace Loupedeck.MyProjectPlugin
                     PluginLog.Info("paste");
                     break;
                 case "change":
-                    this.action *= -1;
+                    this.Action = "-1";
+                    break;
+                case "send":
+                    this.DemoPlugin.GetServer().SendMessage("Hello");
                     break;
                 case "rot":
                     //PluginLog.Info();

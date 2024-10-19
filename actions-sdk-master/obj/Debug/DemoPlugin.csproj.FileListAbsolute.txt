@@ -39,3 +39,17 @@ D:\Projects\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.dll
 D:\Projects\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\refint\DemoPlugin.dll
 D:\Projects\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.pdb
 D:\Projects\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\ref\DemoPlugin.dll
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\bin\Debug\DemoPlugin.deps.json
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\bin\Debug\DemoPlugin.dll
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\bin\Debug\DemoPlugin.pdb
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.csproj.AssemblyReference.cache
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.AssemblyInfoInputs.cache
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.AssemblyInfo.cs
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.sourcelink.json
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.csproj.Up2Date
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.dll
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\refint\DemoPlugin.dll
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\DemoPlugin.pdb
+C:\Users\User\Documents\GitHub\Meichu-Hackathon2024\actions-sdk-master\obj\Debug\ref\DemoPlugin.dll

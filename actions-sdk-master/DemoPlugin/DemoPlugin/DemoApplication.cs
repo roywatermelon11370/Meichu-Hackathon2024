@@ -4,7 +4,7 @@ namespace Loupedeck.DemoPlugin
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using System.Timers;
-    using Loupedeck.MyProjectPlugin;
+    using Loupedeck.DemoPlugin;
 
     public class DemoApplication : ClientApplication
     {
