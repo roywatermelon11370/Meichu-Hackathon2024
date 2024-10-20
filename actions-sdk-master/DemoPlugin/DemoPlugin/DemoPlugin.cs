@@ -19,8 +19,10 @@ namespace Loupedeck.DemoPlugin
 
         public void setAction(String act){
             this.action = act;
-            this._excelcommon.SetAction(act);
+            //this._excelcommon.SetAction(act);
         }
+
+        public String getAction()=>this.action;
 
         public ExcelCommon _excelcommon;
 

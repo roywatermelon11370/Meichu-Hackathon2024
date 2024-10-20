@@ -19,13 +19,20 @@ namespace Loupedeck.DemoPlugin
         }
         protected PluginDynamicFolderNavigation GetNavigationArea() => PluginDynamicFolderNavigation.None; // 設置為 ButtonArea，這將在觸控頁面的左上角自動添加返回按鈕
 
-        public String Action = "select";
+        public String Action = "common";
 
-        public void SetAction(String msg) 
-        {
-            PluginLog.Info($"message is {msg}");
-            this.Action = msg;
-        }
+        public String State;
+
+        public Func<string> getAction;
+
+        // public void SetAction(String msg) 
+        // {
+        //     PluginLog.Info($"message is {msg}");
+        //     this.Action = msg;
+        //     PluginLog.Info($"message is {this.Action}");
+        //     PluginLog.Info($"action is {this}");
+            
+        // }
 
 
         public String current_recv;
@@ -75,6 +82,8 @@ namespace Loupedeck.DemoPlugin
         public String[] buttons;
 
         private Int32 i = 0;
+
+        //public String getAction()=>this.Action;
 
         // Define the buttons for the touch page
         // public override IEnumerable<String> GetButtonPressActionNames()
@@ -179,7 +188,9 @@ namespace Loupedeck.DemoPlugin
                     SimulateCtrlV();
                     break;
                 case "change":
-                    this.Action = "-1";
+                    //this.Action = this.getAction();
+                    this.Action = this.DemoPlugin.action;
+                    PluginLog.Info($"action is {this.Action}");
                     break;
                 case "send":
                     this.DemoPlugin.GetServer().SendMessage(i.ToString());
