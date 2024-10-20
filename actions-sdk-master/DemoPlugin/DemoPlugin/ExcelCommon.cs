@@ -24,7 +24,7 @@ namespace Loupedeck.DemoPlugin
         public void SetAction(String msg) 
         {
             PluginLog.Info($"message is {msg}");
-            // this.Action = msg;
+            this.Action = msg;
         }
 
 

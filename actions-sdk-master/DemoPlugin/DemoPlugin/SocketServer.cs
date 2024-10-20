@@ -40,7 +40,7 @@ namespace Loupedeck.DemoPlugin
     public class SocketServer
     {
         //private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
-        private readonly Action<string> _setAction;
+        private Action<string> setAction;
 
         private readonly HttpListener _listener;
         // private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
@@ -56,7 +56,7 @@ namespace Loupedeck.DemoPlugin
         //     return 0;
         // }
 
-        public SocketServer()
+        public SocketServer(Action<string> setAct)
         {
             Task.Run(async() => await this.StartServer());
             // Above gpt
@@ -66,9 +66,9 @@ namespace Loupedeck.DemoPlugin
             this._commands = Channel.CreateUnbounded<String>();
             this._commandReader = this._commands.Reader;
             this._commandWriter = this._commands.Writer;
-            this._trans = new TransferRecv();
+            // this._trans = new TransferRecv();
+            this.setAction = setAct;
             Task.Run(async () => await this.StartServer());
-            // this.SetAction(setAction);
         }
 
         public async void SendMessage(String msg)
@@ -98,8 +98,8 @@ namespace Loupedeck.DemoPlugin
             }
         }
 
-        public static async Task HandleMessages(WebSocket webSocket) {
-            var buffer = new byte[1024 * 4];
+        public async Task HandleMessages(WebSocket webSocket) {
+            //var buffer = new byte[1024 * 4];
         try {
             using (var ms = new MemoryStream()) {
                 while (webSocket.State == WebSocketState.Open) {
@@ -116,6 +116,7 @@ namespace Loupedeck.DemoPlugin
                         var msgString = Encoding.UTF8.GetString(ms.ToArray());
                         //this._trans.SendCurrentRecv(msgString);
                         PluginLog.Info($"Message received: {msgString}");
+                        this.setAction(msgString);
                     }
                     ms.Seek(0, SeekOrigin.Begin);
                     ms.Position = 0;

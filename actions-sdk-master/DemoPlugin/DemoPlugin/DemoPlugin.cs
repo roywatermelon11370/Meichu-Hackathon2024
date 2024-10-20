@@ -17,10 +17,9 @@ namespace Loupedeck.DemoPlugin
 
         public String action;
 
-        public Int32 setAction(String act){
+        public void setAction(String act){
             this.action = act;
             this._excelcommon.SetAction(act);
-            return 0;
         }
 
         public ExcelCommon _excelcommon;
@@ -54,7 +53,7 @@ namespace Loupedeck.DemoPlugin
             PluginResources.Init(this.Assembly);
 
             // this._server = new SocketServer();
-            this._server = new SocketServer(); 
+            this._server = new SocketServer(this.setAction); 
             this._excelcommon = new ExcelCommon();
         }
 
