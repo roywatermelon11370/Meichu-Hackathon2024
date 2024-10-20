@@ -7,7 +7,6 @@ namespace Loupedeck.DemoPlugin
     using System.Threading;
 
     using Loupedeck;
-    using Loupedeck.DemoPlugin;
 
     public class ExcelCommon : PluginDynamicFolder
     {
@@ -20,18 +19,23 @@ namespace Loupedeck.DemoPlugin
         }
         protected PluginDynamicFolderNavigation GetNavigationArea() => PluginDynamicFolderNavigation.None; // 設置為 ButtonArea，這將在觸控頁面的左上角自動添加返回按鈕
 
-        public string Action = "select";
+        public String Action = "select";
 
-        public async void setAction(string msg) {
+        public void SetAction(String msg) 
+        {
+            PluginLog.Info($"SetAction in");
             this.Action = msg;
         }
+        public String current_recv;
+
+        //public void SendCurrentRecv()
 
         [DllImport("user32.dll")]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        private static extern void keybd_event(Byte bVk, Byte bScan, UInt32 dwFlags, UIntPtr dwExtraInfo);
 
-        private const byte VK_CONTROL = 0x11;
-        private const byte VK_C = 0x43;
-        private const uint KEYEVENTF_KEYUP = 0x0002;
+        private const Byte VK_CONTROL = 0x11;
+        private const Byte VK_C = 0x43;
+        private const UInt32 KEYEVENTF_KEYUP = 0x0002;
 
         public static void SimulateCtrlC()
         {
@@ -55,7 +59,7 @@ namespace Loupedeck.DemoPlugin
         public Int32 counter = 0;
         public String[] buttons;
 
-        private int i = 0;
+        private Int32 i = 0;
 
         // Define the buttons for the touch page
         public override IEnumerable<String> GetButtonPressActionNames()
@@ -66,9 +70,15 @@ namespace Loupedeck.DemoPlugin
                 case "select":
                     this.buttons = new String[]
                         {"rot"     ,"close"
-                ,"send"     ,""     ,"change"
-                ,"cut"  ,"copy" ,"paste"};
-                break;
+                    ,"send"     ,""     ,"change"
+                    ,"cut"  ,"copy" ,"paste"};
+                    break;
+                case "normal":
+                    this.buttons = new String[]
+                        {"rot"     ,"close"
+                    ,"send"     ,""     ,"change"
+                    ,"refresh"  ,"2" ,"3"};
+                    break;
                 // case "select":
                 //     this.buttons = new String[]
                 //         {"rot"     ,"close"
@@ -79,21 +89,10 @@ namespace Loupedeck.DemoPlugin
                 this.buttons = new String[]
                         {"rot"     ,"close"
                 ,"send"     ,""     ,"change"
-                ,"1"  ,"2" ,"3"};
+                ,"owo"  ,"2" ,"3"};
                 break;
 
             }
-            // if (this.action == "1")//常用
-            // {
-                
-            // }
-            // else
-            // {
-            //     this.buttons = new String[]
-            //             {"rot"     ,"close"
-            //     ,"send"     ,""     ,"change"
-            //     ,"1"    ,"2"    ,"3"};
-            // }
             return new[]
                 {
                     PluginDynamicFolder.NavigateUpActionName,
@@ -130,10 +129,13 @@ namespace Loupedeck.DemoPlugin
                     break;
                 case "send":
                     this.DemoPlugin.GetServer().SendMessage(i.ToString());
-                    i++;
+                    this.i++;
                     break;
                 case "rot":
                     //PluginLog.Info();
+                    break;
+                case "refresh":
+                    
                     break;
                 default:
                     break;
