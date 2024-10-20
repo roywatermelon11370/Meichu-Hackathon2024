@@ -188,12 +188,13 @@ namespace Loupedeck.DemoPlugin
                     SimulateCtrlV();
                     break;
                 case "change":
-                    //this.Action = this.getAction();
+                    //this.Action = this.getAction();s
                     this.Action = this.DemoPlugin.action;
+                    this.DemoPlugin.setAction("common");
                     PluginLog.Info($"action is {this.Action}");
                     break;
                 case "send":
-                    this.DemoPlugin.GetServer().SendMessage(i.ToString());
+                    this.DemoPlugin.GetServer().SendMessage("create");
                     this.i++;
                     break;
                 case "rot":
