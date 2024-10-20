@@ -43,8 +43,13 @@ namespace Loupedeck.DemoPlugin
         private static extern void keybd_event(Byte bVk, Byte bScan, UInt32 dwFlags, UIntPtr dwExtraInfo);
 
         private const Byte VK_CONTROL = 0x11;
+
+        private const Byte VK_WINDOWS = 0x5B;
         private const Byte VK_C = 0x43;
+
+        private const Byte VK_D = 0x44;
         private const Byte VK_V = 0x56;
+        private const Byte VK_X = 0x58;
         private const UInt32 KEYEVENTF_KEYUP = 0x0002;
 
         public static void SimulateCtrlC()
@@ -69,6 +74,30 @@ namespace Loupedeck.DemoPlugin
             keybd_event(VK_V, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
             // 松开 Ctrl
             keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+        }
+
+        public static void SimulateCtrlX()
+        {
+            // 按下 Ctrl
+            keybd_event(VK_CONTROL, 0, 0, UIntPtr.Zero);
+            // 按下 C
+            keybd_event(VK_X, 0, 0, UIntPtr.Zero);
+            // 松开 C
+            keybd_event(VK_X, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+            // 松开 Ctrl
+            keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+        }
+
+        public static void SimulateWindowsD()
+        {
+            // 按下 Ctrl
+            keybd_event(VK_WINDOWS, 0, 0, UIntPtr.Zero);
+            // 按下 C
+            keybd_event(VK_D, 0, 0, UIntPtr.Zero);
+            // 松开 C
+            keybd_event(VK_D, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+            // 松开 Ctrl
+            keybd_event(VK_WINDOWS, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
         }
 
         // public void UpdateAction(string newAction) {
@@ -144,13 +173,13 @@ namespace Loupedeck.DemoPlugin
         case "normal":
             this.buttons = new String[]
             {
-                "rot", "close", "send", "", "change", "refresh", "2", "3"
+                "rot", "close", "send", "", "change", "refresh", "Desktop", "3"
             };
             break;
         default:
             this.buttons = new String[]
             {
-                "rot", "close", "send", "", "change", "owo", "2", "3"
+                "rot", "close", "send", "", "change", "owo", "Desktop", "3"
             };
             break;
     }
@@ -172,12 +201,17 @@ namespace Loupedeck.DemoPlugin
         {
             switch (actionParameter)
             {
+                case "Desktop":
+                    PluginLog.Info("Show Desktop");
+                    SimulateWindowsD();
+                    break;
                 case "close":
                     PluginLog.Info("close");
                     this.Close();
                     break;
                 case "cut":
                     PluginLog.Info("cut");
+                    SimulateCtrlX();
                     break;
                 case "copy":
                     PluginLog.Info("copy");

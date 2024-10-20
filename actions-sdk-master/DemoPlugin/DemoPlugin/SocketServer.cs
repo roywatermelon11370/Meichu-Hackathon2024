@@ -107,7 +107,7 @@ namespace Loupedeck.DemoPlugin
                     do {
                         var messageBuffer = WebSocket.CreateClientBuffer(1024, 16);
                         result = await webSocket.ReceiveAsync(messageBuffer, CancellationToken.None);
-                        PluginLog.Info("Fuck");
+       
                         ms.Write(messageBuffer.Array, messageBuffer.Offset, result.Count);
                     }
                     while (!result.EndOfMessage);
