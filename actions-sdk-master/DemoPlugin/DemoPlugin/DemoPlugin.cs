@@ -15,10 +15,11 @@ namespace Loupedeck.DemoPlugin
 
         public TransferRecv GetTransfer() => this._trans;
 
-        public string action;
+        public String action;
 
-        public int setAction(string act){
+        public Int32 setAction(String act){
             this.action = act;
+            this._excelcommon.SetAction(act);
             return 0;
         }
 
@@ -52,8 +53,9 @@ namespace Loupedeck.DemoPlugin
             // Initialize the plugin resources.
             PluginResources.Init(this.Assembly);
 
-            this._server = new SocketServer(setAction);
-            this._excelcommon = new ExcelCommon(setAction);
+            // this._server = new SocketServer();
+            this._server = new SocketServer(); 
+            this._excelcommon = new ExcelCommon();
         }
 
         // This method is called when the plugin is loaded.

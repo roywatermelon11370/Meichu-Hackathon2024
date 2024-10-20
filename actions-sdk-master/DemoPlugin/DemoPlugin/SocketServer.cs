@@ -21,7 +21,7 @@ namespace Loupedeck.DemoPlugin
     public class TransferRecv : PluginDynamicFolder
     {
 
-        private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
+        //private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
 
         public TransferRecv()
         {
@@ -30,16 +30,17 @@ namespace Loupedeck.DemoPlugin
         }
         protected static PluginDynamicFolderNavigation GetNavigationArea() => PluginDynamicFolderNavigation.None; 
 
-        public void SendCurrentRecv(String msg)
-        {
-            PluginLog.Info($"trans in");
-            this.DemoPlugin.GetExcelCommon().SetAction(msg);
-            PluginLog.Info($"trans out");
-        }
+        // public void SendCurrentRecv(String msg)
+        // {
+        //     PluginLog.Info($"trans in");
+        //     ExcelCommon.SetAction(msg);
+        //     PluginLog.Info($"trans out");
+        // }
     }
     public class SocketServer
     {
         //private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
+        private readonly Action<string> _setAction;
 
         private readonly HttpListener _listener;
         // private DemoPlugin DemoPlugin => this.Plugin as DemoPlugin; 
@@ -50,10 +51,15 @@ namespace Loupedeck.DemoPlugin
 
         private readonly TransferRecv _trans;
 
-        private int SetAction(){};
+        // private int SetAction(int set,string act){
+        //     set(act);
+        //     return 0;
+        // }
 
-        public SocketServer(int setAction)
+        public SocketServer()
         {
+            Task.Run(async() => await this.StartServer());
+            // Above gpt
             this._listener = new HttpListener();
             this._listener.Prefixes.Add("http://localhost:8880/");
 
@@ -62,7 +68,7 @@ namespace Loupedeck.DemoPlugin
             this._commandWriter = this._commands.Writer;
             this._trans = new TransferRecv();
             Task.Run(async () => await this.StartServer());
-            // this.se
+            // this.SetAction(setAction);
         }
 
         public async void SendMessage(String msg)
@@ -93,6 +99,7 @@ namespace Loupedeck.DemoPlugin
         }
 
         public static async Task HandleMessages(WebSocket webSocket) {
+            var buffer = new byte[1024 * 4];
         try {
             using (var ms = new MemoryStream()) {
                 while (webSocket.State == WebSocketState.Open) {
@@ -107,7 +114,7 @@ namespace Loupedeck.DemoPlugin
                     
                     if (result.MessageType == WebSocketMessageType.Text) {
                         var msgString = Encoding.UTF8.GetString(ms.ToArray());
-                        // this._trans.SendCurrentRecv(msgString);
+                        //this._trans.SendCurrentRecv(msgString);
                         PluginLog.Info($"Message received: {msgString}");
                     }
                     ms.Seek(0, SeekOrigin.Begin);
@@ -117,6 +124,7 @@ namespace Loupedeck.DemoPlugin
         } catch (InvalidOperationException) {
             PluginLog.Info("[WS] Tried to receive message while already reading one.");
         }
+        
         }
 
         protected async Task HandleWebSocketConnection(WebSocket webSocket)
